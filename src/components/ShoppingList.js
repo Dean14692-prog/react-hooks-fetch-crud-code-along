@@ -1,35 +1,18 @@
-import React, { useState } from "react";
-import ItemForm from "./ItemForm";
-import Filter from "./Filter";
+import React from "react";
 import Item from "./Item";
 
-function ShoppingList() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [items, setItems] = useState([]);
-
-  function handleCategoryChange(category) {
-    setSelectedCategory(category);
-  }
-
-  const itemsToDisplay = items.filter((item) => {
-    if (selectedCategory === "All") return true;
-
-    return item.category === selectedCategory;
-  });
-
+function ShoppingList({ items = [], onUpdateItem, onDeleteItem }) {
   return (
-    <div className="ShoppingList">
-      <ItemForm />
-      <Filter
-        category={selectedCategory}
-        onCategoryChange={handleCategoryChange}
-      />
-      <ul className="Items">
-        {itemsToDisplay.map((item) => (
-          <Item key={item.id} item={item} />
-        ))}
-      </ul>
-    </div>
+    <ul className="Items">
+      {items.map((item) => (
+        <Item
+          key={item.id}
+          item={item}
+          onUpdateItem={onUpdateItem}
+          onDeleteItem={onDeleteItem}
+        />
+      ))}
+    </ul>
   );
 }
 
